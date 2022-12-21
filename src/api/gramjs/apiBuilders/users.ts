@@ -10,7 +10,7 @@ import { buildApiPeerId } from './peers';
 import { buildApiBotInfo } from './bots';
 import { buildApiPhoto, buildApiUsernames } from './common';
 
-export function buildApiUserFromFull(mtpUserFull: GramJs.users.UserFull): ApiUser {
+export function buildApiUserFromFull(mtpUserFull: GramJs.users.UserFull, supportInfo: any): ApiUser {
   const {
     fullUser: {
       about, commonChatsCount, pinnedMsgId, botInfo, blocked,
@@ -23,6 +23,7 @@ export function buildApiUserFromFull(mtpUserFull: GramJs.users.UserFull): ApiUse
 
   return {
     ...user,
+    supportInfo,
     fullInfo: {
       ...(profilePhoto instanceof GramJs.Photo && { profilePhoto: buildApiPhoto(profilePhoto) }),
       bio: about,

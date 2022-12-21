@@ -331,7 +331,7 @@ export async function fetchCurrentUser() {
     localDb.photos[user.photo.id.toString()] = user.photo;
   }
   localDb.users[buildApiPeerId(user.id, 'user')] = user;
-  const currentUser = buildApiUserFromFull(userFull);
+  const currentUser = buildApiUserFromFull(userFull, undefined);
 
   setMessageBuilderCurrentUserId(currentUser.id);
   onCurrentUserUpdate(currentUser);

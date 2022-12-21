@@ -157,6 +157,23 @@ const ChatExtra: FC<OwnProps & StateProps> = ({
     );
   }
 
+  function renderSupportInfo() {
+    return (user?.supportInfo
+      && (
+        <>
+          <ListItem icon="language" multiline narrow isStatic>
+            <span className="title">{user?.supportInfo.nativeLanguage}</span>
+            <span className="subtitle">{user?.supportInfo.studiedLanguage}</span>
+          </ListItem>
+          <ListItem icon="user" multiline narrow isStatic>
+            <span className="title">{user?.supportInfo.role} from:</span>
+            <span className="subtitle">{user?.supportInfo.dateRegistered.toDateString()}</span>
+          </ListItem>
+        </>
+      )
+    );
+  }
+
   return (
     <div className="ChatExtra">
       {formattedNumber && Boolean(formattedNumber.length) && (
@@ -194,6 +211,7 @@ const ChatExtra: FC<OwnProps & StateProps> = ({
           <span className="subtitle">{lang('SetUrlPlaceholder')}</span>
         </ListItem>
       )}
+      {user?.supportInfo && renderSupportInfo()}
       {!forceShowSelf && (
         <ListItem icon="unmute" ripple onClick={handleNotificationChange}>
           <span>{lang('Notifications')}</span>

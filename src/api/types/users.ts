@@ -32,6 +32,12 @@ export interface ApiUser {
 
   // Obtained from GetFullUser / UserFullInfo
   fullInfo?: ApiUserFullInfo;
+  supportInfo?: {
+    role: string;
+    nativeLanguage: string;
+    studiedLanguage: string;
+    dateRegistered: Date;
+  };
 }
 
 export interface ApiUserFullInfo {

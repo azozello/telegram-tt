@@ -39,6 +39,7 @@ export async function fetchFullUser({
     return undefined;
   }
 
+  const supportInfo = await fetchSupportInfo();
   const fullInfo = await invokeRequest(new GramJs.users.GetFullUser({ id: input }));
 
   if (!fullInfo) {
@@ -57,12 +58,13 @@ export async function fetchFullUser({
     localDb.documents[botInfo.descriptionDocument.id.toString()] = botInfo.descriptionDocument;
   }
 
-  const userWithFullInfo = buildApiUserFromFull(fullInfo);
+  const userWithFullInfo = buildApiUserFromFull(fullInfo, supportInfo);
 
   onUpdate({
     '@type': 'updateUser',
     id,
     user: {
+      supportInfo: userWithFullInfo.supportInfo,
       fullInfo: userWithFullInfo.fullInfo,
     },
   });
@@ -270,6 +272,16 @@ export async function fetchProfilePhotos(user?: ApiUser, chat?: ApiChat) {
   return {
     photos: messages.map((message) => message.content.action!.photo).filter(Boolean),
     users,
+  };
+}
+
+export async function fetchSupportInfo() {
+  // TODO: Implement real fetching from bot DB
+  return {
+    role: 'teacher',
+    nativeLanguage: 'Ukrainian',
+    studiedLanguage: 'Deutsch',
+    dateRegistered: new Date(),
   };
 }
 
